@@ -21,7 +21,7 @@ var user = models.User
 // ROUTES - ROOT
 // ----------------------------------------------
 router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Homazon' });
+  res.redirect('/index');
 });
 
 // ----------------------------------------------
@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 
 router.use(function(req,res,next) {
 	if (!req.user) {
-		res.redirect('/signup')
+		res.redirect('/login')
 	} else {
 		return next()
 	}
@@ -57,5 +57,9 @@ router.use(function(req,res,next) {
 // _|___|___|___|___|___|___|___|___|___|___|
 // ___|___|___|___|___|___|___|___|___|___|__
 //============================================
+
+router.get('/index', function(req, res, next) {
+  res.render('index');
+});
 
 module.exports = router;

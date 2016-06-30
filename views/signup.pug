@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  form.form-signin.text-center(action='/signup', method='post')
+    h2.form-signin-heading Sign up now
+    label.sr-only(for='inputEmail') Name
+    input.form-control(type='email', name='name', placeholder='Name', required='', autofocus='')
+    label.sr-only(for='inputEmail') Email
+    input.form-control(type='email', name='email', placeholder='Email address', required='', autofocus='')
+    label.sr-only(for='inputEmail') Phone
+    input.form-control(type='phone', name='phone', placeholder='Phone', required='', autofocus='')
+    label.sr-only(for='inputPassword') Password
+    input.form-control(type='password', name='password', placeholder='Password', required='')
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign me up now!
+    a(href='/')  Back to home
+
+
+
+
