@@ -15,12 +15,13 @@ var mongoose = require('mongoose');
 var fId = process.env.FACEBOOK_ID;
 var fSecret = process.env.FACEBOOK_SECRET;
 
-var auth = require('./routes/auth');
+
 var routes = require('./routes/index');
-var models = require('./models/models')
+var auth = require('./routes/auth');
 var users = require('./routes/users');
 
 var app = express();
+var models = require('./models/models')
 
 // ----------------------------------------------
 // PUG > JADE > HBS but < EJS

@@ -6,6 +6,7 @@
 // Import dependencies
 // ----------------------------------------------
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var connect = process.env.MONGODB_URI
 mongoose.connect(connect);
@@ -24,12 +25,16 @@ db.once('open', function callback () {
        console.log("DB Connected!");
 });
 
-var userSchema = mongoose.Schema({
+// ----------------------------------------------
+// userSchema
+// ----------------------------------------------
+var userSchema = Schema({
 	displayName:{type: String},
 	email:{type: String, index: { unique: true }},
 	password:{type: String},
-	phone: {type: Number},
-	facebookId: {type: String}
+	phone: {type: String},
+	facebookId: {type: String},
+  defaultShipping:{type: Schema.Types.ObjectId, ref:'Shipping'}
 });
 
 // ----------------------------------------------
@@ -67,8 +72,24 @@ userSchema.methods.comparePassword = function(password) {
 };
 
 // ----------------------------------------------
+// shippingSchema
+// ----------------------------------------------
+var shippingSchema = Schema({
+  name:{type: String, required:true},
+  address1:{type: String, required:true},
+  address2:{type: String},
+  city:{type: String, required:true},
+  state:{type: String, required:true},
+  zip:{type: String, required:true},
+  phone:{type: String, required:true},
+  status:{type: Number, required:true},
+  user:{type: Schema.Types.ObjectId, ref:'User'}
+});
+
+// ----------------------------------------------
 // ExPOrt - NEeD tO aSK moRE?
 // ----------------------------------------------
 module.exports = {
-  User: mongoose.model('User', userSchema)
+  User: mongoose.model('User', userSchema),
+  Shipping: mongoose.model('Shipping', shippingSchema)
 };
