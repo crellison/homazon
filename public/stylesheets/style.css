@@ -1,8 +1,11 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+}
+#logReg input {
+	background-color: transparent;
+	border-width: 0 0 1px 0;
+	border-color: #999;
+	margin-bottom: 5px;
 }
