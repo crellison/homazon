@@ -87,9 +87,19 @@ var shippingSchema = Schema({
 });
 
 // ----------------------------------------------
+// productSchema
+// ----------------------------------------------
+var productSchema = Schema({
+  title: String,
+  description: String,
+  imageUri: String
+});
+
+// ----------------------------------------------
 // ExPOrt - NEeD tO aSK moRE?
 // ----------------------------------------------
 module.exports = {
   User: mongoose.model('User', userSchema),
-  Shipping: mongoose.model('Shipping', shippingSchema)
+  Shipping: mongoose.model('Shipping', shippingSchema),
+  Product: mongoose.model('Product', productSchema)
 };
