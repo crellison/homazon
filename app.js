@@ -99,7 +99,9 @@ passport.use(new LocalStrategy(function(username, password, done) {
 passport.use(new FacebookStrategy({
     clientID: fId,
     clientSecret: fSecret,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    passReqToCallback: true,
+    profileFields:['id', 'email', 'name']
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log("PROFILE!" + " " + profile.id);
@@ -113,6 +115,7 @@ passport.use(new FacebookStrategy({
         var user1 = new User();
         user1.name = profile.displayName;
         user1.facebookId = profile.id;
+        user1.email = profile.email;
 
         user1.save(function(err) {
           if (err) {
