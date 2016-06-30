@@ -97,8 +97,8 @@ passport.use(new LocalStrategy(function(username, password, done) {
 // pAsSPOrt fACEBooK sTRaTEGy
 // ----------------------------------------------
 passport.use(new FacebookStrategy({
-    clientID: '1617821721866028',
-    clientSecret: 'e56f6167cd21dc79744a063e2ceccc95',
+    clientID: fId,
+    clientSecret: fSecret,
     callbackURL: "http://localhost:3000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -142,7 +142,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+// ----------------------------------------------
+// ERR HNDLRS FOR EXPRESS - NO NEED TO COME DOWN!
+// ----------------------------------------------
 
 // development error handler
 // will print stacktrace
