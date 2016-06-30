@@ -14,6 +14,7 @@ var mongoose = require('mongoose');
 
 var fID = process.env.FACEBOOK_ID
 var fSecret = process.env.FACEBOOK_SECRET
+var db = process.env.MONGOOSE_DB
 
 var auth = require('./routes/auth');
 var routes = require('./routes/index');
