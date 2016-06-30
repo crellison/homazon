@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h1= "Products"
+	.product
+		h2= product.title
+		h4= product.description
+		img(src= product.imageUri width="150px")
+

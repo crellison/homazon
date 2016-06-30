@@ -15,7 +15,8 @@ var pug = require('pug')
 // Models
 // ----------------------------------------------
 var models = require('../models/models')
-var user = models.User
+var User = models.User
+var Product = models.Product
 
 // ----------------------------------------------
 // ROUTES - ROOT
@@ -59,7 +60,21 @@ router.use(function(req,res,next) {
 //============================================
 
 router.get('/index', function(req, res, next) {
-  res.render('index');
+	res.render('index');
+});
+
+router.get('/products', function(req, res, next) {
+	Product.find().exec(function(err, products){
+		res.render('products', {products: products});
+	})
+});
+
+router.get('/product/:id', function(req, res, next) {
+	console.log(req.params.id);
+	Product.findById(req.params.id).exec(function(err, product){
+		console.log(product);
+		res.render('product', {product: product});
+	})
 });
 
 module.exports = router;
