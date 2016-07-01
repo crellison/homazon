@@ -63,6 +63,27 @@ router.get('/index', function(req, res, next) {
 	res.render('index');
 });
 
+router.get('/cart', function(req, res, next) {
+	req.session.cart = req.session.cart || [];
+	next();
+}
+
+// router.get('/cart/add/:pid', function(req, res, next) {
+// 	req.session.cart.push
+// }
+
+// router.get('/cart/delete/:pid', function(req, res, next) {
+//   // Insert code that takes a product id (pid), finds that product
+//   // and removes it from the cart array. Remember that you need to use
+//   // the .equals method to compare Mongoose ObjectIDs.
+// }
+
+router.get('/cart/delete', function(req, res, next) {
+  // Empty the cart array
+  req.session.cart = [];
+  res.redirect('/index');
+});
+
 router.get('/products', function(req, res, next) {
 	Product.find().exec(function(err, products){
 		res.render('products', {products: products});
