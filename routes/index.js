@@ -71,17 +71,29 @@ router.get('/index', function(req, res, next) {
 router.get('/cart', function(req, res, next) {
 	req.session.cart = req.session.cart || [];
 	next();
-}
+});
 
-// router.get('/cart/add/:pid', function(req, res, next) {
-// 	req.session.cart.push
-// }
+// not sure if it works yet
+router.get('/cart/add/:pid', function(req, res, next) {
+	Product.findById(req.params.pid).exec(function(err, product){
+		if(product){
+			req.session.cart.push(product);
+		}
+	})
+});
 
-// router.get('/cart/delete/:pid', function(req, res, next) {
-//   // Insert code that takes a product id (pid), finds that product
-//   // and removes it from the cart array. Remember that you need to use
-//   // the .equals method to compare Mongoose ObjectIDs.
-// }
+// not sure if it works yet either
+router.get('/cart/delete/:pid', function(req, res, next) {
+  var deleteItem = function(val, i) {
+    if (req.params.pid.equals(val.product._id)) {
+      req.session.cart.splice(i, 1);
+      // Stops iteration
+      return true;
+    }
+    return false;
+  };
+  res.redirect('/index');
+});
 
 router.get('/cart/delete', function(req, res, next) {
   // Empty the cart array
