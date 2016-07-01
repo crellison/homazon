@@ -15,12 +15,13 @@ var mongoose = require('mongoose');
 var fId = process.env.FACEBOOK_ID;
 var fSecret = process.env.FACEBOOK_SECRET;
 
-var auth = require('./routes/auth');
+
 var routes = require('./routes/index');
-var models = require('./models/models')
+var auth = require('./routes/auth');
 var users = require('./routes/users');
 
 var app = express();
+var models = require('./models/models')
 
 // ----------------------------------------------
 // PUG > JADE > HBS but < EJS
@@ -99,10 +100,11 @@ passport.use(new LocalStrategy(function(username, password, done) {
 passport.use(new FacebookStrategy({
     clientID: fId,
     clientSecret: fSecret,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields:['id', 'email', 'displayName']
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log("PROFILE!" + " " + profile.id);
+    console.log("PROFILE!" + " " + profile);
     User.findOne({ facebookId: profile.id }).exec(function (err, user) {
       if(user){
         return cb(err, user);
@@ -111,8 +113,9 @@ passport.use(new FacebookStrategy({
       if(!user){
 
         var user1 = new User();
-        user1.name = profile.displayName;
+        user1.displayName = profile.displayName;
         user1.facebookId = profile.id;
+        user1.email = profile.emails[0].value;
 
         user1.save(function(err) {
           if (err) {
