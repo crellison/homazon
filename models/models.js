@@ -35,7 +35,8 @@ var userSchema = Schema({
 	phone: {type: String},
 	facebookId: {type: String},
   defaultShipping:{type: Schema.Types.ObjectId, ref:'Shipping'},
-  sessionId: String
+  sessionId: String,
+  registrationCode: String
 });
 
 // ----------------------------------------------

@@ -84,12 +84,15 @@ module.exports = function(passport){
 
 	// POST signup page
 	router.post('/signup',function(req, res) {
-				
+		var min = 1000;
+		var max = 9999;
+		var code = Math.floor(Math.random() * (max - min + 1)) + min;
 		var user = new User();		// create a new instance of the User model
 		user.displayName = req.body.name;  // set the users name (comes from the request)
 		user.email = req.body.email;  // set the users email (comes from the request)
 		user.password = req.body.password;  // set the users password (comes from the request)
 		user.phone = req.body.phone;
+		user.registrationCode = code;
 
 		user.save(function(err) {
 			if (err) {
@@ -97,9 +100,6 @@ module.exports = function(passport){
 				console.log(err);
 				res.render('signup', {error: err});
 			} else {
-				var min = 1000;
-				var max = 9999;
-				var code = Math.floor(Math.random() * (max - min + 1)) + min;
 				client.messages.create({
 					body: code,
 					to: "+1" + req.body.phone,
