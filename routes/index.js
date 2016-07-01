@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
 router.get('/register', function(req,res,next) {
 	res.render('signup')
 })
-router.post('/signup', function(req,res,next) {
+router.post('/register', function(req,res,next) {
 	validateLogin(req);
 	if (req.validationErrors()) {
 		res.render('signup', {errors: req.validationErrors()});
