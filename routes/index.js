@@ -68,6 +68,39 @@ router.get('/index', function(req, res, next) {
 	}
 });
 
+router.get('/cart', function(req, res, next) {
+	req.session.cart = req.session.cart || [];
+	next();
+});
+
+// not sure if it works yet
+router.get('/cart/add/:pid', function(req, res, next) {
+	Product.findById(req.params.pid).exec(function(err, product){
+		if(product){
+			req.session.cart.push(product);
+		}
+	})
+});
+
+// not sure if it works yet either
+router.get('/cart/delete/:pid', function(req, res, next) {
+  var deleteItem = function(val, i) {
+    if (req.params.pid.equals(val.product._id)) {
+      req.session.cart.splice(i, 1);
+      // Stops iteration
+      return true;
+    }
+    return false;
+  };
+  res.redirect('/index');
+});
+
+router.get('/cart/delete', function(req, res, next) {
+  // Empty the cart array
+  req.session.cart = [];
+  res.redirect('/index');
+});
+
 // ----------------------------------------------
 // ROUTES - Shipping Information
 // ----------------------------------------------
