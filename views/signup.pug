@@ -1,0 +1,60 @@
+extends layout
+
+block content
+	.container
+		.row
+			.col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.center-content
+				form.form-signin.text-center#logReg(action='/signup', method='post')
+					h2 Create Account
+					div
+						input(autocomplete='off', type='text', id='dName', name='displayName', placeholder='display name', onblur="validate('dName')")
+					div
+						input(autocomplete='off', type='email', id='email', name='email', placeholder='email', onblur="validate('email')")
+					div
+						input(autocomplete='off', type='text', id='phone', name='phone', placeholder='phone', onblur="validate('phone')")
+					div
+						input(autocomplete='off', type='password', id='password', name='password', placeholder='password', onblur="validate('password')")
+					div
+						input(autocomplete='off', type='password', id='rPassword', name='passwordRepeat', placeholder='repeat password', onblur="validate('rPassword')")
+					div
+						button.btn.btn-lg.btn-primary.btn-block(type='submit', id='reg', disabled) Register Now!
+					div
+						a(href='/') I already have an account
+	script.
+		var validation = {
+			email : /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/,
+			phone : /\b[0-9]{10,}\b/,
+			dName : /\b[A-Za-z0-9._]{1,}\b/,
+			password : /\b[A-Za-z0-9._%+-]{8,}\b/
+		}
+		function validate(x) {
+			if (validation[x]) {
+				if (!validation[x].test(document.getElementById(x).value)) {
+					$('#'+x).css('border-color','#c23824')
+					$('#'+x).css('color','#c23824')
+					return false;
+				} else {
+					$('#'+x).css('border-color','rgb(11,153,140)')
+					$('#'+x).css('color','rgb(11,153,140)')
+				}
+			} else {
+				if ($('#password').val()!==$('#'+x).val()) {
+					$('#'+x).css('border-color','#c23824')
+					$('#'+x).css('color','#c23824')
+					return false;
+				} else {
+					$('#'+x).css('border-color','rgb(11,153,140)')
+					$('#'+x).css('color','rgb(11,153,140)')
+				}
+			}
+			console.log('checking to see if form complete')
+			var good = false
+			$('form input').each(function() {
+				console.log($(this).css('color'))
+				if ($(this).css('color')!=='rgb(11, 153, 140)') {
+					good = true
+				}	
+			})
+			console.log('form incomplete? ',good)
+			if (!good) {$('#reg').prop('disabled',good)}
+		}

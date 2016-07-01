@@ -1,0 +1,43 @@
+extends layout
+
+block content
+	.container
+		.row
+			.col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.center-content
+				form.text-center#logReg(action='/login', method='post')
+					h1 Login
+					div
+						input(type='text', name='phoneNumber', id='phone', placeholder='phone number' autofocus, onblur="validate('phone')")
+					div
+						input(type='password', name='password', id='password', placeholder='password', onblur="validate('password')")
+					div
+						button.btn.btn-lg.btn-primary.btn-block(type='submit', id='login', disabled) Enter Homazon
+					div
+						button.btn.btn-lg.btn-primary.btn-block(type='submit' href='/auth/facebook') Login with Facebook
+					div
+						a(href='/register') Create an account
+					div.errors
+	script.
+		var validation = {
+			phone : /[0-9]{10,}/,
+			password : /\b[A-Za-z0-9._%+-]{8,}\b/
+		}
+		function validate(x) {
+			if (!validation[x].test(document.getElementById(x).value)) {
+				$('#'+x).css('border-color','#c23824')
+				$('#'+x).css('color','#c23824')
+				return false;
+			} else {
+				$('#'+x).css('border-color','rgb(11,153,140)')
+				$('#'+x).css('color','rgb(11,153,140)')
+			}
+			var good = false
+			$('form input').each(function() {
+				console.log($(this).css('color'))
+				if ($(this).css('color')!=='rgb(11, 153, 140)') {
+					good = true
+				}	
+			})
+			console.log('form incomplete? ',good)
+			if (!good) {$('#login').prop('disabled',good)}
+		}
