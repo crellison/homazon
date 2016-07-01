@@ -107,26 +107,29 @@ router.get('/cart/delete', function(req, res, next) {
 router.get('/shippingInfo', function(req,res,next) {
 	res.render('shippingInfo')
 })
-router.post('/shippingInfo', function(req,res,next) {
+router.post('/shippingInfo', function(req,res) {
+	console.log(req.user)
 	var address = new Shipping()
-	name=req.body.name
-	address1=req.body.address1
-	address2=req.body.address2
-	city=req.body.city
-	state=req.body.state
-	zip=req.body.zip
-	phone=req.user.phone
-	status=req.body.status
-	user=req.user._id
-
+	address.name=req.body.name
+	address.address1=req.body.address1
+	address.address2=req.body.address2
+	address.city=req.body.city
+	address.state=req.body.state
+	address.zip=req.body.zipcode
+	address.phone=req.user.phone
+	address.status=req.body.status
+	address.user=req.user._id
+	console.log('\npost called')
 	address.save(function(err,obj) {
+		console.log('save attempted')
 		if (err) {
 			console.log(err);
 			res.render('shippingInfo', {error: err})
 		} else {
 			// return a message
+			console.log('saved!')
 			if (address.status===1) {
-				User.update({id:req.user._id}, {defaultShipping:obj._id}, function(err) {
+				User.update({_id:req.user._id}, {defaultShipping:obj._id}, function(err) {
 					if (err) {
 						res.render('shippingInfo', {error:err})
 					} else {

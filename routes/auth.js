@@ -72,6 +72,25 @@ module.exports = function(passport){
 	    res.redirect('/index');
 	  });
 
+	router.get('/index', function(req,res,next) {
+		if (!req.user.phone) {
+			res.redirect('/phone')
+		} else {
+			next()
+		}
+	})
+	router.get('/phone', function(req,res) {
+		res.render('phone')
+	})
+	router.post('/phone', function(req,res) {
+		User.update({_id:req.user._id}, {phone:req.body.phone}, function(err) {
+			if (err) {
+				res.render('phone')
+			} else {
+				res.redirect('/')
+			}
+		})
+	})
 	// Register route
 	router.get('/signup', function(req, res, next) {
 	  // Your code here.
@@ -165,6 +184,8 @@ module.exports = function(passport){
 	  req.logout();
 	  res.redirect('/login');
 	});
+
+
 
 	return router;
 }
