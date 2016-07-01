@@ -92,10 +92,11 @@ module.exports = function(passport){
 				// duplicate entry
 				console.log(err);
 				res.render('signup', {error: err});
-			}
+			} else {
 
-			// return a message
-			res.redirect('login');
+				// return a message
+				res.redirect('/login');
+			}
 		});
 
 	})

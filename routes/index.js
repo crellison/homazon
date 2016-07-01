@@ -17,6 +17,7 @@ var pug = require('pug')
 var models = require('../models/models')
 var User = models.User
 var Product = models.Product
+var Shipping = models.Shipping
 
 // ----------------------------------------------
 // ROUTES - ROOT
@@ -60,7 +61,11 @@ router.use(function(req,res,next) {
 //============================================
 
 router.get('/index', function(req, res, next) {
-	res.render('index');
+	if (!req.user.defaultShipping) {
+		res.redirect('/shippingInfo')
+	} else {
+		res.redirect('/products')
+	}
 });
 
 router.get('/cart', function(req, res, next) {
@@ -84,6 +89,38 @@ router.get('/cart/delete', function(req, res, next) {
   res.redirect('/index');
 });
 
+// ----------------------------------------------
+// ROUTES - Shipping Information
+// ----------------------------------------------
+router.get('/shippingInfo', function(req,res,next) {
+	res.render('shippingInfo')
+})
+router.post('/shippingInfo', function(req,res,next) {
+	var address = new Shipping()
+	name=req.body.name
+	address1=req.body.address1
+	address2=req.body.address2
+	city=req.body.city
+	state=req.body.state
+	zip=req.body.zip
+	phone=req.body.phone
+	status=req.body.status
+	user=req.user._id
+
+	address.save(function(err) {
+		if (err) {
+			console.log(err);
+			res.render('shippingInfo', {error: err});
+		} else {
+			// return a message
+			res.redirect('login');
+		}
+	})
+})
+
+// ----------------------------------------------
+// SEND TO PRODUCTS AS DEFAULT
+// ----------------------------------------------
 router.get('/products', function(req, res, next) {
 	Product.find().exec(function(err, products){
 		res.render('products', {products: products});
