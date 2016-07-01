@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var accountSid = process.env.TWILIO_SID;
+var authToken = process.env.TWILIO_TOKEN;
+var twilio = require('twilio');
+var client = new twilio.RestClient(accountSid, authToken);
 
 // ----------------------------------------------
 // PUG
@@ -93,9 +97,21 @@ module.exports = function(passport){
 				console.log(err);
 				res.render('signup', {error: err});
 			} else {
-
-				// return a message
-				res.redirect('/login');
+				var min = 1000;
+				var max = 9999;
+				var code = Math.floor(Math.random() * (max - min + 1)) + min;
+				client.messages.create({
+					body: code,
+					to: "+1" + req.body.phone,
+					from: '+18442876556'
+				}, function(err, message){
+					if(err){
+						console.log(err);
+						return
+					}
+					console.log("success!")
+					res.redirect('/login');
+				});
 			}
 		});
 
