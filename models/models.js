@@ -82,6 +82,8 @@ var shippingSchema = Schema({
   state:{type: String, required:true},
   zip:{type: String, required:true},
   phone:{type: String, required:true},
+  // status of 1 indicates default address
+  // status of 0 indicates secondary address
   status:{type: Number, required:true},
   user:{type: Schema.Types.ObjectId, ref:'User'}
 });

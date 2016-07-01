@@ -82,17 +82,27 @@ router.post('/shippingInfo', function(req,res,next) {
 	city=req.body.city
 	state=req.body.state
 	zip=req.body.zip
-	phone=req.body.phone
+	phone=req.user.phone
 	status=req.body.status
 	user=req.user._id
 
-	address.save(function(err) {
+	address.save(function(err,obj) {
 		if (err) {
 			console.log(err);
-			res.render('shippingInfo', {error: err});
+			res.render('shippingInfo', {error: err})
 		} else {
 			// return a message
-			res.redirect('login');
+			if (address.status===1) {
+				User.update({id:req.user._id}, {defaultShipping:obj._id}, function(err) {
+					if (err) {
+						res.render('shippingInfo', {error:err})
+					} else {
+						res.redirect('/products')
+					}
+				})
+			} else {
+				res.redirect('/products')
+			}
 		}
 	})
 })

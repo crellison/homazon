@@ -51,7 +51,6 @@ block content
       console.log('checking to see if form complete')
       var good = false
       $('form input').each(function() {
-        console.log($(this).css('color'))
         if ($(this).css('border-color')!=='rgb(11, 153, 140)') {
           good = true
         } 
