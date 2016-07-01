@@ -14,6 +14,11 @@ block content
           div
             button.btn.btn-lg.btn-primary.btn-block(type='submit') Enter Homazon
           div
-            button.btn.btn-lg.btn-primary.btn-block(type='submit' href='/auth/facebook') Login with Facebook
+            button.btn.btn-lg.btn-primary.btn-block(id='fbLogin') Login with Facebook
           div
             a(href='/signup') No account? Sign up now!
+  script.
+    $('#fbLogin').click(function(e) {
+      e.preventDefault()
+      window.location.href = '/auth/facebook'
+    })
