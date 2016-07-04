@@ -1,10 +1,13 @@
 extends layout
 
 block content
-	h1= "Products"
-	for product in products
-		.product
-			a(href="product/"+product._id) !{product.title}
-			h4= product.description
-			img(src= product.imageUri width="150px")
+  h1= "Products"
+  .product-container
+  for product in products
+    .product      
+      img(src= product.imageUri width="150px")
+      .product-info
+        a(href="product/"+product._id) 
+          h3= product.title
+        h4= product.description
 

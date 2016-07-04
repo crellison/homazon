@@ -1,11 +1,16 @@
-body {
-}
-
-a {
-}
+/* LOGIN */
 #logReg input {
 	background-color: transparent;
 	border-width: 0 0 1px 0;
 	border-color: #999;
 	margin-bottom: 5px;
+}
+/* PRODUCT PAGE */
+.product-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+.product {
+	display: flex;
+	
 }
